@@ -1,103 +1,117 @@
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "@/components/ui/card";
+import { ProjectsData } from "@/data/projects";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Github, Linkedin } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-background">
+      <main className="container py-8 md:py-12">
+        <section className="w-11/12 mx-auto py-12 md:py-24 lg:py-32 flex flex-col items-center text-center">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
+            Hi, I'm <span className="text-primary">Fajar Raihan</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-[700px]">
+            Software Developer specializing in building exceptional digital
+            experiences
+          </p>
+          <div className="flex gap-4">
+            {links.map(({ link, icon, title }) => (
+              <Button asChild variant="outline" size="icon" key={link}>
+                <Link href={link} target="_blank" rel="noopener noreferrer">
+                  <span className="h-5 w-5">{icon}</span>
+                  <span className="sr-only">{title}</span>
+                </Link>
+              </Button>
+            ))}
+          </div>
+        </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+        <Separator />
+        <section id="about" className="py-12 md:py-24 w-11/12 mx-auto">
+          <h2 className="text-3xl font-bold tracking-tight mb-8">About Me</h2>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <p className="text-lg text-muted-foreground mb-4">
+                I'm a passionate software developer with expertise in building
+                modern web applications. With over 5 years of experience in the
+                industry, I've worked on a variety of projects ranging from
+                small business websites to large-scale enterprise applications.
+              </p>
+              <p className="text-lg text-muted-foreground mb-4">
+                My journey in tech began when I was in college, where I
+                discovered my love for creating digital solutions that solve
+                real-world problems. Since then, I've been constantly learning
+                and improving my skills to stay at the forefront of technology.
+              </p>
+              <p className="text-lg text-muted-foreground">
+                When I'm not coding, you can find me hiking, reading, or
+                experimenting with new recipes in the kitchen.
+              </p>
+            </div>
+            <div className="relative h-[400px] rounded-lg overflow-hidden">
+              <Image
+                src="/placeholder.svg?height=400&width=600"
+                alt="About me"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </section>
+
+        <Separator />
+        <section id="projects" className="py-12 md:py-24 w-11/12 mx-auto">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-3xl font-bold tracking-tight">Projects</h2>
+            <Button asChild>
+              <Link href="/projects" className="text-muted-foreground">
+                View All
+              </Link>
+            </Button>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {ProjectsData.map(({ title, desc, image }) => (
+              <Card key={title} className="overflow-hidden gap-0 py-0">
+                <CardHeader className="relative h-56">
+                  <Image
+                    src="https://images.unsplash.com/photo-1642959894234-e0ef989c15a3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    alt={`Project ${title}`}
+                    fill
+                    className="object-cover"
+                  />
+                </CardHeader>
+                <CardContent className="p-6">
+                  <CardTitle className="mb-2">{title}</CardTitle>
+                  <CardDescription className="text-muted-foreground line-clamp-3">{desc}</CardDescription>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
+
+const links = [
+  {
+    link: "https://github.com/fajarrhnn",
+    icon: <Github />,
+    title: "Github",
+  },
+  {
+    link: "https://linkedin.com/in/fajarrhn",
+    icon: <Linkedin />,
+    title: "Linkedin",
+  },
+];
