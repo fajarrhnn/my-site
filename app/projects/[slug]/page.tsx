@@ -20,7 +20,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
-  const projects = await fetch(`/projects/${slug}`)
+  const projects = await fetch(`${process.env.NEXT_PUBLIC_URL}/projects/${slug}`)
     .then((res) => res.json())
     .catch((error) => console.log("Error fetching projects:", error))
     .finally(() => console.log("Fetch completed"));
