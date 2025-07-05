@@ -4,11 +4,9 @@ import {
   CardContent,
   CardTitle,
   CardDescription,
-  CardHeader,
   CardFooter,
 } from "@/components/ui/card";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { DateFormatter } from "@/helpers/formatter";
 
 type Props = {
@@ -30,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const data = await params;
-  const { title, desc, image, date } = ArticlesData.filter(
+  const { title, desc, date } = ArticlesData.filter(
     (article) => article.slug === data.slug
   )[0];
   return (

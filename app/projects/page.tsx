@@ -17,8 +17,11 @@ export default function Project() {
           <h2 className="text-3xl font-bold tracking-tight">Projects</h2>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {ProjectsData.map(({ title, desc, image, slug }) => (
-            <Card key={title} className="overflow-hidden rounded-none gap-0 py-0">
+          {ProjectsData.map(({ title, desc, slug }) => (
+            <Card
+              key={title}
+              className="overflow-hidden rounded-none gap-0 py-0"
+            >
               <CardHeader className="relative h-56">
                 <Image
                   src="https://images.unsplash.com/photo-1642959894234-e0ef989c15a3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

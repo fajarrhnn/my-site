@@ -18,7 +18,7 @@ export default function Articles() {
           <h2 className="text-3xl font-bold tracking-tight">Article</h2>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {ArticlesData.map(({ title, desc, image, slug, date }) => (
+          {ArticlesData.map(({ title, desc, slug, date }) => (
             <Card
               key={title}
               className="overflow-hidden shadow-none rounded-none border"
