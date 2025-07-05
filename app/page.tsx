@@ -4,6 +4,7 @@ import {
   CardContent,
   CardDescription,
   CardTitle,
+  CardFooter,
 } from "@/components/ui/card";
 import { ProjectsData } from "@/data/projects";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,8 @@ import { Separator } from "@/components/ui/separator";
 import { Github, Linkedin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ArticlesData } from "@/data/articles";
+import { DateFormatter } from "@/helpers/formatter";
 
 export default function Home() {
   return (
@@ -28,7 +31,7 @@ export default function Home() {
             {links.map(({ link, icon, title }) => (
               <Button asChild variant="outline" size="icon" key={link}>
                 <Link href={link} target="_blank" rel="noopener noreferrer">
-                  <span className="h-5 w-5">{icon}</span>
+                  <span className="text-center">{icon}</span>
                   <span className="sr-only">{title}</span>
                 </Link>
               </Button>
@@ -60,7 +63,7 @@ export default function Home() {
             </div>
             <div className="relative h-[400px] rounded-lg overflow-hidden">
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src="https://images.unsplash.com/photo-1642959894234-e0ef989c15a3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="About me"
                 fill
                 className="object-cover"
@@ -70,7 +73,7 @@ export default function Home() {
         </section>
 
         <Separator />
-        <section id="projects" className="py-12 md:py-24 w-11/12 mx-auto">
+        <section className="py-12 md:py-24 w-11/12 mx-auto">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-bold tracking-tight">Projects</h2>
             <Button asChild>
@@ -80,8 +83,11 @@ export default function Home() {
             </Button>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {ProjectsData.map(({ title, desc, image }) => (
-              <Card key={title} className="overflow-hidden gap-0 py-0">
+            {ProjectsData.map(({ title, desc, slug }) => (
+              <Card
+                key={title}
+                className="overflow-hidden rounded-none gap-0 py-0"
+              >
                 <CardHeader className="relative h-56">
                   <Image
                     src="https://images.unsplash.com/photo-1642959894234-e0ef989c15a3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -91,9 +97,50 @@ export default function Home() {
                   />
                 </CardHeader>
                 <CardContent className="p-6">
-                  <CardTitle className="mb-2">{title}</CardTitle>
-                  <CardDescription className="text-muted-foreground line-clamp-3">{desc}</CardDescription>
+                  <Link href={`/projects/${slug}`} passHref>
+                    <CardTitle className="mb-2">{title}</CardTitle>
+                  </Link>
+                  <CardDescription className="text-muted-foreground line-clamp-3">
+                    {desc}
+                  </CardDescription>
                 </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <Separator />
+        <section className="py-12 w-11/12 mx-auto">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-3xl font-bold tracking-tight">Article</h2>
+            <Button asChild>
+              <Link href="/articles" className="text-muted-foreground">
+                View All
+              </Link>
+            </Button>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {ArticlesData.map(({ title, desc, slug, date }) => (
+              <Card
+                key={title}
+                className="overflow-hidden shadow-none rounded-none border"
+              >
+                <CardContent>
+                  <Link href={`/articles/${slug}`} passHref>
+                    <CardTitle className="text-lg">{title}</CardTitle>
+                  </Link>
+                  <CardDescription className="mt-2 text-sm text-justify text-muted-foreground line-clamp-4">
+                    {desc}
+                  </CardDescription>
+                </CardContent>
+                <CardFooter className="flex justify-between items-center">
+                  <CardDescription className="text-sm text-muted-foreground">
+                    Published on {DateFormatter(date)}
+                  </CardDescription>
+                  <Button asChild variant="outline" size="sm">
+                    <Link href={`/articles/${slug}`}>{"Read More >>"}</Link>
+                  </Button>
+                </CardFooter>
               </Card>
             ))}
           </div>

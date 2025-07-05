@@ -1,0 +1,98 @@
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import { ProjectsData } from "@/data/projects";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Github, Globe } from "lucide-react";
+import { Metadata } from "next";
+
+type Props = {
+  params: { slug: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const slug = (await params).slug;
+
+  const { title, desc } = ProjectsData.filter(
+    (project) => project.slug === slug
+  )[0];
+
+  return {
+    title: `${title} | Fjrrhn`,
+    description: desc,
+  };
+}
+
+export default async function ProjectDetail({ params }: Props) {
+  const slug = await params.slug;
+  const { title, desc, status, link, tools } = ProjectsData.filter(
+    (project) => project.slug === slug
+  )[0];
+
+  return (
+    <>
+      <section className="w-11/12 mx-auto container py-12">
+        <Card className="overflow-hidden rounded-none">
+          <CardHeader>
+            <img
+              src={
+                "https://images.unsplash.com/photo-1750875936215-0c35c1742cd6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8"
+              }
+              alt={`${title}`}
+            />
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <CardTitle>{title}</CardTitle>
+            <CardDescription>{desc}</CardDescription>
+            {status === "public" &&
+              link.map(({ github, preview }) => (
+                <div className="w-max" key={github}>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="default" asChild>
+                      <Link
+                        href={github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Github className="h-5 w-5 mr-1" />
+                        Code
+                      </Link>
+                    </Button>
+                    <Button size="default" asChild>
+                      <Link
+                        href={preview}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Globe className="h-5 w-5 mr-1" />
+                        Live Demo
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              ))}
+          </CardContent>
+          <CardFooter className="flex flex-col justify-start items-start">
+            <CardTitle className="text-xl">Stack</CardTitle>
+            <div className="flex flex-col">
+              {tools.map(({ title, url, desc }) => (
+                <CardDescription key={title}>
+                  <Link href={url} target="_blank">
+                    <strong className="underline">{title}</strong>
+                  </Link>
+                  . {desc}
+                </CardDescription>
+              ))}
+            </div>
+          </CardFooter>
+        </Card>
+      </section>
+    </>
+  );
+}
