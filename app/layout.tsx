@@ -12,7 +12,7 @@ const RobotoFont = Roboto({
 export const metadata: Metadata = {
   title: {
     default: "Fjrrhn",
-    template: "%s | Fjrrhn",
+    template: "%s - Fjrrhn",
   },
   description: "Personal website of Fjrrhn, a junior web developer.",
   icons: {

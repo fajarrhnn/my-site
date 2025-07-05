@@ -10,27 +10,32 @@ import type { Metadata } from "next";
 import { DateFormatter } from "@/helpers/formatter";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const slug = (await params).slug;
+  const { slug } = await params;
 
-  const { title, desc } = ArticlesData.filter(
-    (article) => article.slug === slug
-  )[0];
+  const article = await fetch(`/articles/${slug}`)
+    .then((res) => res.json())
+    .catch((error) => console.log("Error fetching article:", error))
+    .finally(() => console.log("Fetch completed"));
 
   return {
-    title: `${title} | Fjrrhn`,
-    description: desc,
+    title: article.title,
+    description: article.desc,
   };
 }
 
 export default async function Page({ params }: Props) {
-  const data = await params;
-  const { title, desc, date } = ArticlesData.filter(
-    (article) => article.slug === data.slug
-  )[0];
+  const { slug } = await params;
+
+  const fetchApi = await fetch(`/articles/${slug}`)
+    .then((res) => res.json())
+    .catch((error) => console.log(error))
+    .finally(() => console.log("Fetch completed"));
+
+  const { title, desc, date } = await fetchApi;
   return (
     <>
       <section className="w-11/12 mx-auto container py-12">

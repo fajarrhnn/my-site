@@ -14,24 +14,24 @@ import { Metadata } from "next";
 import Image from "next/image";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const slug = (await params).slug;
+  const { slug } = await params;
 
-  const { title, desc } = ProjectsData.filter(
-    (project) => project.slug === slug
-  )[0];
+  const projects = await fetch(`/projects/${slug}`)
+    .then((res) => res.json())
+    .catch((error) => console.log("Error fetching projects:", error))
+    .finally(() => console.log("Fetch completed"));
 
   return {
-    title: `${title} | Fjrrhn`,
-    description: desc,
+    title: projects.title,
+    description: projects.desc,
   };
 }
-
 export default async function ProjectDetail({ params }: Props) {
-  const slug = await params.slug;
+  const { slug } = await params;
   const { title, desc, status, link, tools } = ProjectsData.filter(
     (project) => project.slug === slug
   )[0];
