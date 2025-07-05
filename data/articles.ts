@@ -1,6 +1,6 @@
 import { SlugFormatter } from "@/helpers/formatter";
 
-type TypeOfProject = {
+type ProjectType = {
   title: string;
   slug: string;
   desc: string;
@@ -18,7 +18,9 @@ const articles = [
   },
 ];
 
-export const ArticlesData: TypeOfProject[] = articles.map((article) => ({
+export const ArticlesData: ProjectType[] = articles.map((article) => ({
   ...article,
   slug: SlugFormatter(article.title),
 }));
+
+export type { ProjectType };

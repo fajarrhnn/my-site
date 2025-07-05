@@ -77,3 +77,5 @@ export const ProjectsData: TypeOfProject[] = projects.map((project) => ({
   ...project,
   slug: SlugFormatter(project.title),
 }));
+
+export type { LinkType, ToolType };

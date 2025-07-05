@@ -6,7 +6,7 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import { ProjectsData } from "@/data/projects";
+import { LinkType, ProjectsData, ToolType } from "@/data/projects";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Github, Globe } from "lucide-react";
@@ -20,7 +20,9 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
-  const projects = await fetch(`${process.env.NEXT_PUBLIC_URL}/projects/${slug}`)
+  const projects = await fetch(
+    `${process.env.NEXT_PUBLIC_URL}/projects/${slug}`
+  )
     .then((res) => res.json())
     .catch((error) => console.log("Error fetching projects:", error))
     .finally(() => console.log("Fetch completed"));
@@ -32,9 +34,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 export default async function ProjectDetail({ params }: Props) {
   const { slug } = await params;
-  const { title, desc, status, link, tools } = ProjectsData.filter(
-    (project) => project.slug === slug
-  )[0];
+  const projects = await fetch(
+    `${process.env.NEXT_PUBLIC_URL}/projects/${slug}`
+  ).then((res) => res.json());
+
+  const { title, desc, link, status, tools } = await projects;
 
   return (
     <>
@@ -53,7 +57,7 @@ export default async function ProjectDetail({ params }: Props) {
             <CardTitle>{title}</CardTitle>
             <CardDescription>{desc}</CardDescription>
             {status === "public" &&
-              link.map(({ github, preview }) => (
+              link.map(({ github, preview }: LinkType) => (
                 <div className="w-max" key={github}>
                   <div className="flex gap-2">
                     <Button variant="outline" size="default" asChild>
@@ -83,7 +87,7 @@ export default async function ProjectDetail({ params }: Props) {
           <CardFooter className="flex flex-col justify-start items-start">
             <CardTitle className="text-xl">Stack</CardTitle>
             <div className="flex flex-col">
-              {tools.map(({ title, url, desc }) => (
+              {tools.map(({ title, url, desc }: ToolType) => (
                 <CardDescription key={title}>
                   <Link href={url} target="_blank">
                     <strong className="underline">{title}</strong>

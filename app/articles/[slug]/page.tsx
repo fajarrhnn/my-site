@@ -1,4 +1,4 @@
-import { ArticlesData } from "@/data/articles";
+import { ArticlesData, ProjectType } from "@/data/articles";
 import {
   Card,
   CardContent,
@@ -27,15 +27,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Page({ params }: Props) {
+export default async function ArticlesDetail({ params }: Props) {
   const { slug } = await params;
 
-  const fetchApi = await fetch(`${process.env.NEXT_PUBLIC_URL}/articles/${slug}`)
-    .then((res) => res.json())
-    .catch((error) => console.log(error))
-    .finally(() => console.log("Fetch completed"));
+  const fetchApi = await fetch(
+    `${process.env.NEXT_PUBLIC_URL}/articles/${slug}`
+  ).then((res) => res.json());
 
-  const { title, desc, date } = await fetchApi;
+  const { title, desc, date }: ProjectType = await fetchApi;
   return (
     <>
       <section className="w-11/12 mx-auto container py-12">
