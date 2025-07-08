@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
   const projects = await fetch(
-    `${process.env.NEXT_PUBLIC_URL}/projects/${slug}`
+    `/projects/${slug}`
   )
     .then((res) => res.json())
     .catch((error) => console.log("Error fetching projects:", error))
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProjectDetail({ params }: Props) {
   const { slug } = await params;
   const projects = await fetch(
-    `${process.env.NEXT_PUBLIC_URL}/projects/${slug}`
+    `/projects/${slug}`
   ).then((res) => res.json());
 
   const { title, desc, link, status, tools } = await projects;
