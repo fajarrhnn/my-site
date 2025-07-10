@@ -70,7 +70,7 @@ export default async function ArticlesDetail({ params }: Props) {
         </Card> */}
       </section>
     );
-  } catch (error) {
+  } catch (error: Error | any) {
     console.error("Error fetching article:", error);
     return <div>Error: Failed to load article. {error}</div>;
   }
