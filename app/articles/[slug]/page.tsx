@@ -42,7 +42,7 @@ console.log(fetchApi)
         <Card className="overflow-hidden rounded-none">
           {/* <CardHeader>
             <Image src={""} />
-          </CardHeader> */}
+          </CardHeader>
           <CardContent>
             <CardTitle>{title}</CardTitle>
             <CardDescription className="mt-4">{desc}</CardDescription>
