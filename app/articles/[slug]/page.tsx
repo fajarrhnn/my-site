@@ -16,7 +16,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
-  const article = await fetch(`/articles/${slug}`)
+  const article = await fetch(`${process.env.BASE_URL}/articles/${slug}`)
     .then((res) => res.json())
     .catch((error) => console.log("Error fetching article:", error))
     .finally(() => console.log("Fetch completed"));
@@ -31,13 +31,14 @@ export default async function ArticlesDetail({ params }: Props) {
   const { slug } = await params;
 
   const fetchApi = await fetch(
-    `/articles/${slug}`
+    `${process.env.BASE_URL}/articles/${slug}`
   ).then((res) => res.json());
 
-  const { title, desc, date }: ProjectType = await fetchApi;
+  // const { title, desc, date }: ProjectType = await fetchApi;
   return (
     <>
-      <section className="w-11/12 mx-auto container py-12">
+      <p>anjay alok</p>
+{/*       <section className="w-11/12 mx-auto container py-12">
         <Card className="overflow-hidden rounded-none">
           {/* <CardHeader>
             <Image src={""} />
@@ -50,7 +51,7 @@ export default async function ArticlesDetail({ params }: Props) {
             <CardDescription>{DateFormatter(date)}</CardDescription>
           </CardFooter>
         </Card>
-      </section>
+      </section> */}
     </>
   );
 }
