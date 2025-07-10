@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     console.log(article);
 
     return {
-      title: article.title.
+      title: article.title,
       description: article.desc
     };
   } catch (error) {
