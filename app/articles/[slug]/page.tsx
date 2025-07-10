@@ -16,31 +16,48 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
-  const article = await fetch(`${process.env.BASE_URL}/articles/${slug}`)
-    .then((res) => res.json())
-    .catch((error) => console.log("Error fetching article:", error))
-    .finally(() => console.log("Fetch completed"));
+  try {
+    const article = await fetch(`${process.env.BASE_URL}/articles/${slug}`)
+      .then((res) => res.json());
 
-  return {
-    title: article.title,
-    description: article.desc,
-  };
+    console.log(article);
+
+    return {
+      title: article.title
+      description: article.desc
+    };
+  } catch (error) {
+    console.error("Error fetching article metadata:", error);
+    return {
+      title: "Error",
+      description: "Failed to load article metadata",
+    };
+  }
 }
 
 export default async function ArticlesDetail({ params }: Props) {
   const { slug } = await params;
 
-  const fetchApi = await fetch(
-    `${process.env.BASE_URL}/articles/${slug}`
-  ).then((res) => res.json());
-console.log(fetchApi)
-  // const { title, desc, date }: ProjectType = await fetchApi;
-  return (
-    <>
-      <p>anjay alok</p>
-{/*       <section className="w-11/12 mx-auto container py-12">
-        <Card className="overflow-hidden rounded-none">
-          {/* <CardHeader>
+  if (!slug) {
+    return <div>Error: No article slug provided</div>;
+  }
+
+  try {
+    const fetchApi = await fetch(`${process.env.BASE_URL}/articles/${slug}`).then((res) =>
+      res.json()
+    );
+
+    console.log(fetchApi);  // Log to inspect the fetched data
+
+    // Assuming you have these fields in the fetched article:
+    // const { title, desc, date }: ProjectType = fetchApi;
+
+    return (
+      <section className="w-11/12 mx-auto container py-12">
+        <p>Article Details</p>
+        {/* Render the fetched article */}
+        {/* <Card className="overflow-hidden rounded-none">
+          <CardHeader>
             <Image src={""} />
           </CardHeader>
           <CardContent>
@@ -50,8 +67,11 @@ console.log(fetchApi)
           <CardFooter>
             <CardDescription>{DateFormatter(date)}</CardDescription>
           </CardFooter>
-        </Card>
-      </section> */}
-    </>
-  );
+        </Card> */}
+      </section>
+    );
+  } catch (error) {
+    console.error("Error fetching article:", error);
+    return <div>Error: Failed to load article</div>;
+  }
 }
