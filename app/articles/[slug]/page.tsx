@@ -47,14 +47,14 @@ export default async function ArticlesDetail({ params }: Props) {
       res.json()
     );
 
-    console.log(articles);  // Log to inspect the fetched data
+    console.log({new Array(articles)});  // Log to inspect the fetched data
 
     // Assuming you have these fields in the fetched article:
     // const { title, desc, date }: ProjectType = fetchApi;
 
     return (
       <section className="w-11/12 mx-auto container py-12">
-        <p>Article Details: {articles}</p>
+        <p>Article Details: {new Array(articles)}</p>
         {/* Render the fetched article */}
         {/* <Card className="overflow-hidden rounded-none">
           <CardHeader>
