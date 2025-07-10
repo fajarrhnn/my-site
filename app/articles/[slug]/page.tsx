@@ -72,6 +72,6 @@ export default async function ArticlesDetail({ params }: Props) {
     );
   } catch (error) {
     console.error("Error fetching article:", error);
-    return <div>Error: Failed to load article</div>;
+    return <div>Error: Failed to load article. {error}</div>;
   }
 }
