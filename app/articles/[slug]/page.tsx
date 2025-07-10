@@ -33,7 +33,7 @@ export default async function ArticlesDetail({ params }: Props) {
   const fetchApi = await fetch(
     `${process.env.BASE_URL}/articles/${slug}`
   ).then((res) => res.json());
-
+console.log(fetchApi)
   // const { title, desc, date }: ProjectType = await fetchApi;
   return (
     <>
