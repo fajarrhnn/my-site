@@ -17,7 +17,7 @@ import { DateFormatter } from "@/helpers/formatter";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="w-full min-h-screen bg-background">
       <main className="py-8 md:py-12">
         <section className="w-11/12 mx-auto py-12 md:py-24 lg:py-32 flex flex-col items-center text-center">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
