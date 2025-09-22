@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
   try {
-    const article = await fetch(`${process.env.BASE_URL}/articles/${slug}`)
+    const article = await fetch(`/articles/${slug}`)
       .then((res) => res.json());
 
     console.log(article);
@@ -43,7 +43,7 @@ export default async function ArticlesDetail({ params }: Props) {
   }
 
   try {
-    const articles = await fetch(`${process.env.BASE_URL}/articles/${slug}`).then((res) =>
+    const articles = await fetch(`/articles/${slug}`).then((res) =>
       res.json()
     );
 
